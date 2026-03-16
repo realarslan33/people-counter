@@ -1,18 +1,12 @@
-# People-Counting-in-Real-Time
-People Counting in Real-Time using live video stream/IP camera in OpenCV.
-
-> NOTE: This is an improvement/modification to https://www.pyimagesearch.com/2018/08/13/opencv-people-counter/
+# Real Time People Counter
+People Counting in Real-Time using live video stream. SSD Detector and Centroid Tracker are being used.
 
 <div align="center">
 <img src=https://imgur.com/SaF1kk3.gif" width=550>
 <p>Live demo</p>
 </div>
 
-- The primary aim is to use the project as a business perspective, ready to scale.
-- Use case: counting the number of people in the stores/buildings/shopping malls etc., in real-time.
-- Sending an alert to the staff if the people are way over the limit.
-- Automating features and optimising the real-time stream for better performance (with threading).
-- Acts as a measure towards footfall analysis and in a way to tackle COVID-19 scenarios.
+- Use case: The main use case of this project is to count the number of people in the stores/buildings/shopping malls etc., in real-time.
 
 --- 
 
@@ -40,16 +34,12 @@ People Counting in Real-Time using live video stream/IP camera in OpenCV.
 
 ### SSD detector
 
-- We are using a SSD ```Single Shot Detector``` with a MobileNet architecture. In general, it only takes a single shot to detect whatever is in an image. That is, one for generating region proposals, one for detecting the object of each proposal. 
-- Compared to other two shot detectors like R-CNN, SSD is quite fast.
-- ```MobileNet```, as the name implies, is a DNN designed to run on resource constrained devices. For e.g., mobiles, ip cameras, scanners etc.
-- Thus, SSD seasoned with a MobileNet should theoretically result in a faster, more efficient object detector.
+- I used a SSD ```Single Shot Detector``` with a MobileNet architecture. 
 
 ### Centroid tracker
 
 - Centroid tracker is one of the most reliable trackers out there.
-- To be straightforward, the centroid tracker computes the ```centroid``` of the bounding boxes.
-- That is, the bounding boxes are ```(x, y)``` co-ordinates of the objects in an image. 
+- Centroid tracker computes the ```centroid``` of the bounding boxes.
 - Once the co-ordinates are obtained by our SSD, the tracker computes the centroid (center) of the box. In other words, the center of an object.
 - Then an ```unique ID``` is assigned to every particular object deteced, for tracking over the sequence of frames.
 
@@ -61,8 +51,6 @@ People Counting in Real-Time using live video stream/IP camera in OpenCV.
 
 First up, install all the required Python dependencies by running: ```
 pip install -r requirements.txt ```
-
-> NOTE: Supported Python version is 3.11.3 (there can always be version conflicts between the dependencies, OS, hardware etc.).
 
 ### Test video file
 
@@ -126,23 +114,14 @@ In the config, setup your sender email ```"Email_Send": ""``` to send the alerts
 
 Similarly, setup the sender email password ```"Email_Password": ""```.
 
-Note that the password varies if you have secured 2 step verification turned on, so refer the links below and create an application specific password:
-
-- Google mail has a guide here: https://myaccount.google.com/lesssecureapps
-- For 2 step verified accounts: https://support.google.com/accounts/answer/185833
-
 ### Threading
 
 - Multi-Threading is implemented in ```utils/thread.py```. If you ever see a lag/delay in your real-time stream, consider using it.
-- Threading removes ```OpenCV's internal buffer``` (which basically stores the new frames yet to be processed until your system processes the old frames) and thus reduces the lag/increases fps.
-- If your system is not capable of simultaneously processing and outputting the result, you might see a delay in the stream. This is where threading comes into action.
 - It is most suitable to get solid performance on complex real-time applications. To use threading: set ```"Thread": true,``` in config.
 
 ### Scheduler
 
 - Automatic scheduler to start the software. Configure to run at every second, minute, day, or workdays e.g., Monday to Friday.
-- This is extremely useful in a business scenario, for instance, you could run the people counter only at your desired time (maybe 9-5?).
-- Variables and any cache/memory would be reset, thus, less load on your machine.
 
 ```python
 # runs at every day (09:00 am)
@@ -184,5 +163,3 @@ if num_seconds > 28800:
 - Schedule: https://pypi.org/project/schedule/
 
 ---
-
-*saimj7/ 19-08-2020 - © <a href="http://saimj7.github.io" target="_blank">Sai_Mj</a>.*
